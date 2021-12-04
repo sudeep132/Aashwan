@@ -9,3 +9,6 @@ def index(request):
     data={'ngos':ngos}
     print(data)
     return render(request, 'index.html',data)
+
+def register_ngo(request):
+    return render(request,'register_ngo.html')
