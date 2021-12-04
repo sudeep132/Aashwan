@@ -5,7 +5,7 @@ from .models import *
 # Create your views here.
 def index(request):
     #ngos=NGO.objects.all()
-    ngos = NGO.objects.raw('select * from NGO')
+    ngos = Organization.objects.raw('select * from ngo_organization')
     data={'ngos':ngos}
     print(data)
     return render(request, 'index.html',data)

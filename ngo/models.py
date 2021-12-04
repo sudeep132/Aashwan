@@ -1,23 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser,UserManager
 
-# Create your models here.
-class NGO(models.Model):
-    location=models.TextField()
-    links=models.TextField()
-    name=models.CharField(max_length=100)
+class Organization(AbstractUser):
+    name = models.CharField(max_length=50, default='Anonymous')
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=254, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    phone = models.CharField(max_length=15,blank = True,null=True)
+    description = models.TextField(blank=True,null=True)
+    location=models.TextField(blank=True,null=True)
+    links=models.TextField(blank=True,null=True)
     logo=models.ImageField(upload_to="images")
-    helpline_no=models.CharField(max_length=30)
-    description=models.TextField()
+    objects = UserManager()
 
-    def __str__(self):
-        return self.name
-
-class Events(models.Model):
-    location=models.TextField()
-    venue=models.TextField()
-    ngo_id=models.ForeignKey(NGO,on_delete=models.CASCADE,default=None)
-    name=models.CharField(max_length=100)
-    description=models.TextField()
-
-    def __str__(self):
-        return self.name
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']

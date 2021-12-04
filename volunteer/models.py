@@ -1,5 +1,5 @@
 from django.db import models
-from ngo.models import Events
+from event.models import Event
 
 # Create your models here.
 class Volunteers(models.Model):
@@ -7,7 +7,7 @@ class Volunteers(models.Model):
     email_id=models.EmailField(max_length=100)
     phone_no=models.CharField(max_length=20)
     gender=models.CharField(max_length=20)
-    event_id=models.ForeignKey(Events,on_delete=models.CASCADE,default=None)
+    event_id=models.ForeignKey(Event,on_delete=models.CASCADE,default=None)
 
     def __str__(self):
         return self.name
