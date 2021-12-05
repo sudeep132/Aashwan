@@ -11,7 +11,6 @@ def index(request):
     #ngos=NGO.objects.all()
     ngos = Organization.objects.raw('select * from ngo_organization')
     data={'ngos':ngos}
-    print(data)
     return render(request, 'index.html',data)
 
 @csrf_exempt
@@ -66,3 +65,9 @@ def login_ngo(request):
             return redirect('/login-ngo/')
     else:
         return render(request,"login_ngo.html")
+
+def logout_ngo(request):
+    print(request.user.is_authenticated)
+    auth.logout(request)
+    print(request.user.is_authenticated)
+    return redirect('/')
