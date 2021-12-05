@@ -29,14 +29,18 @@ def register_ngo(request):
         links=request.POST['links']
         logo=request.FILES['logo']
         if password==confirm_password:
-            #if Organization.objects.raw('select * from ngo_organization where username={};'.format(username)):
+            #org=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username={};'''.format(username))
+            #if(len(org)>0):
             if Organization.objects.filter(username=username).exists():
                 #return JsonResponse({'Login':'Username taken'})
+                print("Jai")
                 messages.info(request,'Username Taken')
                 return redirect('/register-ngo/')
-            #elif Organization.objects.raw('select * from ngo_organization where email={};'.format(email)):
+            #orgi=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE email={};'''.format(email))
+            #if(len(orgi)>0):
             elif Organization.objects.filter(email=email).exists():
                 #return JsonResponse({'Login':'Email taken'})
+                print("JAIII")
                 messages.info(request,'Email Taken')
                 return redirect('/register-ngo/')
             else:
@@ -55,11 +59,11 @@ def login_ngo(request):
     if request.method=="POST":
         username=request.POST['username']
         password=request.POST['password']
-        #user=Organization.objects.raw("SELECT * FROM ngo_organization WHERE username={}".format(username))
-        user=Organization.objects.get(username=username)
-        if(user.check_password(password)):
+        user=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username={};'''.format(username))
+        #user=Organization.objects.get(username=username)
+        if(user[0].check_password(password)):
             auth.login(request,user)
-            print(user.is_authenticated)
+            print(user[0].is_authenticated)
             return redirect('/')
         else:
             messages.info(request,'Invalid credentials')
@@ -75,8 +79,9 @@ def logout_ngo(request):
     return redirect('/')
 
 def ngo_page(request,nid):
-    org_data=Organization.objects.get(pk=nid)
-    eve_data=Event.objects.filter(ngo_id=nid)
-    print(org_data.logo.url)
-    data={'org_data':org_data,'eve_data':eve_data}
+    #org_data=Organization.objects.get(pk=nid)
+    org_data=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE id={};'''.format(nid))
+    #eve_data=Event.objects.filter(ngo_id=nid)
+    eve_data=Event.objects.raw('''SELECT * FROM event_event WHERE ngo_id_id={};'''.format(nid))
+    data={'org_data':org_data[0],'eve_data':eve_data}
     return render(request,"ngo.html",data)

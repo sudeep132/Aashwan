@@ -19,4 +19,5 @@ from django.urls import path
 
 urlpatterns = [
     path('create-event/<int:nid>/',views.create_event,name="Create Event"),
+    path('<int:eid>/',views.event_details,name="Event page")
 ]
