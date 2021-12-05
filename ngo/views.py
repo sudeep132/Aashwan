@@ -1,17 +1,17 @@
-from django.http import response
-from django.http import JsonResponse
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User,auth
+from django.contrib.auth.models import auth
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.db import connection
 from .models import *
 
 # Create your views here.
+@csrf_exempt
 def index(request):
     #ngos=NGO.objects.all()
     ngos = Organization.objects.raw('select * from ngo_organization')
     data={'ngos':ngos}
+    print(data)
     return render(request, 'index.html',data)
 
 @csrf_exempt
@@ -28,18 +28,41 @@ def register_ngo(request):
         links=request.POST['links']
         logo=request.FILES['logo']
         if password==confirm_password:
+            #if Organization.objects.raw('select * from ngo_organization where username={};'.format(username)):
             if Organization.objects.filter(username=username).exists():
+                #return JsonResponse({'Login':'Username taken'})
                 messages.info(request,'Username Taken')
-                return redirect('Register')
+                return redirect('/register-ngo/')
+            #elif Organization.objects.raw('select * from ngo_organization where email={};'.format(email)):
             elif Organization.objects.filter(email=email).exists():
+                #return JsonResponse({'Login':'Email taken'})
                 messages.info(request,'Email Taken')
-                return redirect('Register')
+                return redirect('/register-ngo/')
             else:
+                #user=Organization.objects.raw('insert into ngo_organization (username,password,email,name,location,phone,description,links,logo) values ({},{},{},{},{},{},{},{},{})'.format(username,password,email,name,location,phone,description,links,logo))
                 user=Organization.objects.create_user(username=username,password=password,email=email,name=name,location=location,phone=phone,description=description,links=links,logo=logo)
                 user.save()
                 messages.info(request,'Success')
-                return JsonResponse({'Login':'successfull'})
+                return redirect('/login-ngo/')
         else:
             messages.info(request,'Password does not match')
-            return redirect('Register')
+            print("Password no")
+            return redirect('/register-ngo/')
     return render(request,'register_ngo.html')
+
+def login_ngo(request):
+    if request.method=="POST":
+        username=request.POST['username']
+        password=request.POST['password']
+        #user=Organization.objects.raw("SELECT * FROM ngo_organization WHERE username={}".format(username))
+        user=Organization.objects.get(username=username)
+        if(user.check_password(password)):
+            auth.login(request,user)
+            print(user.is_authenticated)
+            return redirect('/')
+        else:
+            messages.info(request,'Invalid credentials')
+            print("Wrong",username,password,user)
+            return redirect('/login-ngo/')
+    else:
+        return render(request,"login_ngo.html")

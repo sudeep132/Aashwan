@@ -19,5 +19,6 @@ from django.urls import path
 
 urlpatterns = [
     path('',views.index,name="index"),
-    path('register-ngo/',views.register_ngo,name="Register NGO")
+    path('register-ngo/',views.register_ngo,name="Register NGO"),
+    path('login-ngo/',views.login_ngo,name="Login NGO")
 ]
