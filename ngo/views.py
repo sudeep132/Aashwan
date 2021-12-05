@@ -3,6 +3,8 @@ from django.contrib.auth.models import auth
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
+
+from event.models import Event
 from .models import *
 
 # Create your views here.
@@ -71,3 +73,10 @@ def logout_ngo(request):
     auth.logout(request)
     print(request.user.is_authenticated)
     return redirect('/')
+
+def ngo_page(request,nid):
+    org_data=Organization.objects.get(pk=nid)
+    eve_data=Event.objects.filter(ngo_id=nid)
+    print(org_data.logo.url)
+    data={'org_data':org_data,'eve_data':eve_data}
+    return render(request,"ngo.html",data)

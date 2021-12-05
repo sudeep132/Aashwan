@@ -15,14 +15,16 @@
     <button type="button" class="btn btn-outline-success" onclick="window.location.href='login-ngo/'">Login</button>
     <button type="button" class="btn btn-outline-success" onclick="window.location.href='logout-ngo/'">Logout</button>
     {% for ngo in ngos %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">{{ngo.name}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ngo.location}}</h6>
-          <p class="card-text">{{ngo.description}}</p>
-          <a href="#" class="card-link">{{ngo.link}}</a>
+    <a href="ngo/{{ngo.pk}}">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">{{ngo.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ngo.location}}</h6>
+            <p class="card-text">{{ngo.description}}</p>
+            <a href="#" class="card-link">{{ngo.link}}</a>
+            </div>
         </div>
-    </div>
+    </a>
     {% endfor %}
 </body>
 </html>
