@@ -14,6 +14,49 @@
     <button type="button" class="btn btn-outline-success" onclick="window.location.href='register-ngo/'">Register</button>
     <button type="button" class="btn btn-outline-success" onclick="window.location.href='login-ngo/'">Login</button>
     <button type="button" class="btn btn-outline-success" onclick="window.location.href='logout-ngo/'">Logout</button>
+    <div class="create-volunteer-modal">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Register as volunteer
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/volunteer/create-volunteer/" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Name</label>
+                          <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="exampleInputPassword1" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" id="exampleInputPassword1" name="description" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">gender</label>
+                            <input type="text" class="form-control" name="gender" id="exampleInputPassword1" name="description" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
     {% for ngo in ngos %}
     <a href="ngo/{{ngo.pk}}">
         <div class="card" style="width: 18rem;">
