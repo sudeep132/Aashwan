@@ -7,7 +7,8 @@ class Volunteers(models.Model):
     email_id=models.EmailField(max_length=100)
     phone_no=models.CharField(max_length=20)
     gender=models.CharField(max_length=20)
-    event_id=models.ForeignKey(Event,on_delete=models.CASCADE,default=None)
+    credit=models.IntegerField(default=0)
+    event_id=models.ForeignKey(Event,on_delete=models.CASCADE,default=None,null=True)
 
     def __str__(self):
         return self.name

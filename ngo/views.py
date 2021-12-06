@@ -73,9 +73,7 @@ def login_ngo(request):
         return render(request,"login_ngo.html")
 
 def logout_ngo(request):
-    print(request.user.is_authenticated)
     auth.logout(request)
-    print(request.user.is_authenticated)
     return redirect('/')
 
 def ngo_page(request,nid):
