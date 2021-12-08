@@ -19,5 +19,6 @@ from django.urls import path
 
 urlpatterns = [
     path('create-volunteer/',views.create_volunteer,name="Create Volunteer"),
-    path('enroll-volunteer/<int:eid>/',views.enroll_volunteer,name="Enroll Volunteer")
+    path('enroll-volunteer/<int:eid>/',views.enroll_volunteer,name="Enroll Volunteer"),
+    path('',views.user_list,name="User List")
 ]

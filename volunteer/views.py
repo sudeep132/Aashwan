@@ -42,3 +42,8 @@ def enroll_volunteer(request,eid):
             return redirect('/')
         messages.info(request,"Failed")
         return redirect('/')
+
+def user_list(request):
+    v_list=Volunteers.objects.raw('SELECT * FROM volunteer_volunteers')
+    data={'v_list':v_list}
+    return render(request,'volunteer.html',data)
