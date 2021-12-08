@@ -59,10 +59,11 @@ def login_ngo(request):
     if request.method=="POST":
         username=request.POST['username']
         password=request.POST['password']
-        user=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username={};'''.format(username))
+        user=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username='{}';'''.format(username))
         #user=Organization.objects.get(username=username)
+        print(user)
         if(user[0].check_password(password)):
-            auth.login(request,user)
+            auth.login(request,user[0])
             print(user[0].is_authenticated)
             return redirect('/')
         else:
