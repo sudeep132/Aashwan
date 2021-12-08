@@ -29,16 +29,16 @@ def register_ngo(request):
         links=request.POST['links']
         logo=request.FILES['logo']
         if password==confirm_password:
-            #org=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username={};'''.format(username))
-            #if(len(org)>0):
-            if Organization.objects.filter(username=username).exists():
+            org=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE username='{}';'''.format(username))
+            if(len(org)>0):
+            #if Organization.objects.filter(username=username).exists():
                 #return JsonResponse({'Login':'Username taken'})
                 print("Jai")
                 messages.info(request,'Username Taken')
                 return redirect('/register-ngo/')
-            #orgi=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE email={};'''.format(email))
-            #if(len(orgi)>0):
-            elif Organization.objects.filter(email=email).exists():
+            orgi=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE email='{}';'''.format(email))
+            if(len(orgi)>0):
+            #elif Organization.objects.filter(email=email).exists():
                 #return JsonResponse({'Login':'Email taken'})
                 print("JAIII")
                 messages.info(request,'Email Taken')
@@ -79,8 +79,8 @@ def logout_ngo(request):
 
 def ngo_page(request,nid):
     #org_data=Organization.objects.get(pk=nid)
-    org_data=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE id={};'''.format(nid))
+    org_data=Organization.objects.raw('''SELECT * FROM ngo_organization WHERE id='{}';'''.format(nid))
     #eve_data=Event.objects.filter(ngo_id=nid)
-    eve_data=Event.objects.raw('''SELECT * FROM event_event WHERE ngo_id_id={};'''.format(nid))
+    eve_data=Event.objects.raw('''SELECT * FROM event_event WHERE ngo_id_id='{}';'''.format(nid))
     data={'org_data':org_data[0],'eve_data':eve_data}
     return render(request,"ngo.html",data)
