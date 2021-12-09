@@ -15,6 +15,10 @@
     <h3>{{eve_data.description}}</h3>
     <p>{{eve_data.location}}</p>
     <p>{{eve_data.venue}}</p>
+    <p>{{eve_data.cred_points}}</p>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/volunteer/assign-cred-points/{{eve_data.pk}}/{{eve_data.cred_points}}/'">
+        Assign points
+    </button>
     <br/><br/>
     <div class="create-volunteer-modal">
         <!-- Button trigger modal -->

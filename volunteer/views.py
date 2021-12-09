@@ -47,3 +47,9 @@ def user_list(request):
     v_list=Volunteers.objects.raw('SELECT * FROM volunteer_volunteers')
     data={'v_list':v_list}
     return render(request,'volunteer.html',data)
+
+def assign_cred_points(request,eid,points):
+    query='''UPDATE volunteer_volunteers SET credit={} WHERE event_id_id='{}';'''.format(points,eid)
+    cursor.execute(query)
+    #v_list=Volunteers.objects.raw('''SELECT credits FROM volunteer_volunteers WHERE event_id_id='{}';'''.format(eid))
+    return redirect('/')
