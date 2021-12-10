@@ -1,0 +1,27 @@
+.landing-page-header{
+    height:30rem;
+    width:100%;
+}
+
+.create-volunteer-modal{
+    width:50%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:0 10rem;
+}
+
+.landing-page-content{
+    text-align: center;
+}
+
+.svg-modal{
+    width:60%;
+    height:100%;
+    float:right;
+    position: absolute;
+    top: 50px;
+    right:-20rem;
+}
