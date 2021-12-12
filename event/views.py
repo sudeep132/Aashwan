@@ -16,10 +16,12 @@ def create_event(request,nid):
     name=request.POST['name']
     description=request.POST['description']
     ngo=Organization.objects.get(pk=nid)
-    query='''INSERT INTO event_event (location,venue,ngo_id_id,name,description) VALUES ('{}','{}','{}','{}','{}');'''.format(location,venue,nid,name,description)
-    cursor.execute(query)
-    #events = Event.objects.create(location=location,venue=venue,ngo_id=ngo,name=name,description=description)
-    #events.save()
+    cred_points=int(request.POST['cred_points'])
+    print(nid,ngo)
+    #query='''INSERT INTO event_event (location,venue,ngo_id_id,name,description,cred_points) VALUES ('{}','{}','{}','{}','{}','{}');'''.format(location,venue,ngo,name,description,cred_points)
+    #cursor.execute(query)
+    events = Event.objects.create(location=location,venue=venue,ngo_id=ngo,name=name,description=description,cred_points=cred_points)
+    events.save()
     return redirect('/ngo/{}'.format(nid))
 
 def event_details(request,eid):
