@@ -52,4 +52,6 @@ def assign_cred_points(request,eid,points):
     query='''UPDATE volunteer_volunteers SET credit={} WHERE event_id_id='{}';'''.format(points,eid)
     cursor.execute(query)
     #v_list=Volunteers.objects.raw('''SELECT credits FROM volunteer_volunteers WHERE event_id_id='{}';'''.format(eid))
+    query='''DELETE FROM event_event WHERE id={};'''.format(eid)
+    cursor.execute(query)
     return redirect('/')

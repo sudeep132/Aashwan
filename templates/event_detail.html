@@ -8,52 +8,95 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Document</title>
+    <style>
+
+        .event-detail-page{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width:100%;
+            margin-top:10rem;
+        }
+
+        .card{
+            width:60%;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .card-body div{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .button-div{
+            margin:3rem;
+            display:flex;
+            flex-direction: row;
+        }
+
+        .btn{
+            margin:20px;
+        }
+    </style>
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h1>{{eve_data.name}}</h1>
-    <h3>{{eve_data.description}}</h3>
-    <p>{{eve_data.location}}</p>
-    <p>{{eve_data.venue}}</p>
-    <p>{{eve_data.cred_points}}</p>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/volunteer/assign-cred-points/{{eve_data.pk}}/{{eve_data.cred_points}}/'">
-        Assign points
-    </button>
-    <br/><br/>
-    <div class="create-volunteer-modal">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Register as volunteer
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="event-detail-page">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h2 class="card-title">{{eve_data.name}}</h5>
+                    <h5 class="card-subtitle mb-2 text-muted">{{eve_data.description}}</h6>     
                 </div>
-                <div class="modal-body">
-                    <form action="/volunteer/enroll-volunteer/{{eve_data.id}}/" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                <hr/>
+                <p class="card-text">Location: {{eve_data.location}}</p>
+                <p class="card-text">Time: {{eve_data.venue}}</p>
+                <p class="card-text">Credits: {{eve_data.cred_points}}</p>
+            </div>
+        </div>
+        <div class="button-div">
+            {% if request.user.id == eve_data.ngo_id.pk %}
+            <button type="button" class="btn btn-outline-success" onclick="window.location.href='/volunteer/assign-cred-points/{{eve_data.pk}}/{{eve_data.cred_points}}/'">
+                Assign points
+            </button>
+            {% endif %}
+            <br/><br/>
+            <div class="create-volunteer-modal">
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Register as volunteer
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Enroll for this event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        <div class="modal-body">
+                            <form action="/volunteer/enroll-volunteer/{{eve_data.id}}/" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Username</label>
+                                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-success">Submit</button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
+    
     </div>
+    
 </body>
 </html>
