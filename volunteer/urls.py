@@ -21,5 +21,4 @@ urlpatterns = [
     path('create-volunteer/',views.create_volunteer,name="Create Volunteer"),
     path('enroll-volunteer/<int:eid>/',views.enroll_volunteer,name="Enroll Volunteer"),
     path('assign-cred-points/<int:eid>/<int:points>/',views.assign_cred_points,name="Assign cred points"),
-    path('',views.user_list,name="User List")
 ]

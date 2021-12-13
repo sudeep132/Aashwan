@@ -32,7 +32,7 @@
             {% endif %}
             {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="/volunteer/">Volunteer-List</a>
+              <a class="nav-link" href="/ngo/{{request.user.id}}/">My-NGO</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/logout-ngo/">Logout</a>
